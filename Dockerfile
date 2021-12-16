@@ -44,7 +44,7 @@ libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 RUN sudo apt-get update && sudo apt-get install -y lcov
 
 # Install Gradle
-ENV JAVA_HOME=/usr/lib/jvm/default-java GRADLE_HOME=/usr/lib/gradle GRADLE_VERSION=6.9 ANDROID_HOME=/home/builder/android/sdk ANDROID_NDK_HOME=/workdir/android/ndk/ndk-bundle/android-ndk-r24-beta2
+ENV JAVA_HOME=/usr/lib/jvm/default-java GRADLE_HOME=/usr/lib/gradle GRADLE_VERSION=6.7 ANDROID_HOME=/home/builder/android/sdk ANDROID_NDK_HOME=/workdir/android/ndk/ndk-bundle/android-ndk-r20
 
 RUN echo "Downloading Gradle" \
 && wget --no-verbose --output-document=gradle.zip "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
@@ -76,13 +76,12 @@ ARG ANDROID_TARGET_SDK=31
 ARG ANDROID_BUILD_TOOLS=31.0.0
 
 # accept license
-RUN yes | sdkmanager --licenses
-RUN sdkmanager --update
+RUN yes | sdkmanager --licenses \
+ && sdkmanager --update
 
-#RUN sdkmanager "platforms;android-${ANDROID_TARGET_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" platform-tools tools
+RUN sdkmanager "platforms;android-${ANDROID_TARGET_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" platform-tools tools
 
-RUN sudo chown builder:builder .
-#RUN sudo chown builder:builder /workdir
+RUn sudo chown builder:builder .
 
 # git helper to see where we are
 #RUN wget https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
