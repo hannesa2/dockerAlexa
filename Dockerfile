@@ -6,6 +6,11 @@ python python3 wget unzip build-essential cpio \
 git-core libssl-dev default-jdk ninja-build \
 sudo locales
 
+RUN apt-get install -y vim
+RUN cat ~/.bashrc
+RUN echo "alias ls='ls -la'" >> ~/.bashrc
+RUN cat ~/.bashrc
+
 # Locale settings
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
