@@ -7,9 +7,7 @@ git-core libssl-dev default-jdk ninja-build \
 sudo locales
 
 RUN apt-get install -y vim
-RUN cat ~/.bashrc
 RUN echo "alias ls='ls -la'" >> ~/.bashrc
-RUN cat ~/.bashrc
 
 # Locale settings
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -86,7 +84,9 @@ RUN yes | sdkmanager --licenses \
 
 RUN sdkmanager "platforms;android-${ANDROID_TARGET_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" platform-tools tools
 
-RUn sudo chown builder:builder .
+RUN sudo chown builder:builder .
+RUN sudo mkdir /workdir
+RUN sudo chown builder:builder /workdir
 
 # git helper to see where we are
 #RUN wget https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
