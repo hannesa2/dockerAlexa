@@ -15,6 +15,8 @@ echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
 dpkg-reconfigure --frontend=noninteractive locales && \
 update-locale LANG=en_US.UTF-8
 
+RUN apt-get install -y git-core bash-completion
+
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
@@ -87,10 +89,6 @@ RUN sdkmanager "platforms;android-${ANDROID_TARGET_SDK}" "build-tools;${ANDROID_
 RUN sudo chown builder:builder .
 RUN sudo mkdir /workdir
 RUN sudo chown builder:builder /workdir
-
-# git helper to see where we are
-#RUN wget https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
-#RUN chmod +x ~/git-completion.bash && ~/git-completion.bash
 
 ENV PS1="\u@\h \W\[\033[32m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
 
